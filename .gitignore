@@ -1,0 +1,40 @@
+# User specified ignored documentation
+docs/demo_guide.md
+docs/viva_questions.md
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache & bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs and runtime artifacts
+logs/
+*.log
+*.pid
+
+# Node / Frontend artifacts
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+.npm
+*-debug.log*
+
+# Environment and editor files
+.env
+.env.local
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/

@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  origin:
+    build:
+      context: ./origin_server
+      dockerfile: Dockerfile
+    container_name: edgecache-origin
+    ports:
+      - "8080:8080"
+    environment:
+      - ORIGIN_PORT=8080
+      - ORIGIN_LATENCY_MS=500
+    restart: unless-stopped
+
+  cache-node-1:
+    build:
+      context: ./cache_node
+      dockerfile: Dockerfile
+    container_name: edgecache-node-1
+    ports:
+      - "8001:8001"
+    environment:
+      - NODE_ID=node-1
+      - NODE_PORT=8001
+      - ORIGIN_URL=http://origin:8080
+      - CACHE_CAPACITY=5
+      - CACHE_TTL=60
+    depends_on:
+      - origin
+    restart: unless-stopped
+
+  cache-node-2:
+    build:
+      context: ./cache_node
+      dockerfile: Dockerfile
+    container_name: edgecache-node-2
+    ports:
+      - "8002:8002"
+    environment:
+      - NODE_ID=node-2
+      - NODE_PORT=8002
+      - ORIGIN_URL=http://origin:8080
+      - CACHE_CAPACITY=5
+      - CACHE_TTL=60
+    depends_on:
+      - origin
+    restart: unless-stopped
+
+  cache-node-3:
+    build:
+      context: ./cache_node
+      dockerfile: Dockerfile
+    container_name: edgecache-node-3
+    ports:
+      - "8003:8003"
+    environment:
+      - NODE_ID=node-3
+      - NODE_PORT=8003
+      - ORIGIN_URL=http://origin:8080
+      - CACHE_CAPACITY=5
+      - CACHE_TTL=60
+    depends_on:
+      - origin
+    restart: unless-stopped
+
+  router:
+    build:
+      context: ./router
+      dockerfile: Dockerfile
+    container_name: edgecache-router
+    ports:
+      - "8000:8000"
+    environment:
+      - ROUTER_PORT=8000
+      - ORIGIN_URL=http://origin:8080
+      - NODE_1_URL=http://cache-node-1:8001
+      - NODE_2_URL=http://cache-node-2:8002
+      - NODE_3_URL=http://cache-node-3:8003
+    depends_on:
+      - cache-node-1
+      - cache-node-2
+      - cache-node-3
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: edgecache-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_ROUTER_URL=http://localhost:8000
+    depends_on:
+      - router
+    restart: unless-stopped
