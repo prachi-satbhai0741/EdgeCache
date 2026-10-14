@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 ENV ROUTER_PORT=8000
-ENV ORIGIN_URL=http://origin:8080
+ENV ORIGIN_URL=http://origin:9080
 ENV NODE_1_URL=http://cache-node-1:8001
 ENV NODE_2_URL=http://cache-node-2:8002
 ENV NODE_3_URL=http://cache-node-3:8003

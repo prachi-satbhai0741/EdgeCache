@@ -7,9 +7,9 @@ services:
       dockerfile: Dockerfile
     container_name: edgecache-origin
     ports:
-      - "8080:8080"
+      - "9080:9080"
     environment:
-      - ORIGIN_PORT=8080
+      - ORIGIN_PORT=9080
       - ORIGIN_LATENCY_MS=500
     restart: unless-stopped
 
@@ -23,7 +23,7 @@ services:
     environment:
       - NODE_ID=node-1
       - NODE_PORT=8001
-      - ORIGIN_URL=http://origin:8080
+      - ORIGIN_URL=http://origin:9080
       - CACHE_CAPACITY=5
       - CACHE_TTL=60
     depends_on:
@@ -40,7 +40,7 @@ services:
     environment:
       - NODE_ID=node-2
       - NODE_PORT=8002
-      - ORIGIN_URL=http://origin:8080
+      - ORIGIN_URL=http://origin:9080
       - CACHE_CAPACITY=5
       - CACHE_TTL=60
     depends_on:
@@ -57,7 +57,7 @@ services:
     environment:
       - NODE_ID=node-3
       - NODE_PORT=8003
-      - ORIGIN_URL=http://origin:8080
+      - ORIGIN_URL=http://origin:9080
       - CACHE_CAPACITY=5
       - CACHE_TTL=60
     depends_on:
@@ -73,7 +73,7 @@ services:
       - "8000:8000"
     environment:
       - ROUTER_PORT=8000
-      - ORIGIN_URL=http://origin:8080
+      - ORIGIN_URL=http://origin:9080
       - NODE_1_URL=http://cache-node-1:8001
       - NODE_2_URL=http://cache-node-2:8002
       - NODE_3_URL=http://cache-node-3:8003
