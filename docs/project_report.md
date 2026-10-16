@@ -1,6 +1,4 @@
 # EdgeCache: A Distributed Web Caching and Edge Computing Simulator
-**Course:** Distributed Systems (DS) — Final Year / 3rd Year B.Tech / B.E. Computer Engineering  
-**Academic Project Report**
 
 ---
 
